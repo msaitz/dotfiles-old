@@ -3,13 +3,15 @@
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id volnoti
 exec --no-startup-id compton --config $HOME/.config/compton
+exec --no-startup-id tilda
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # #---Basic Definitions---# #
 # Needed for i3-gaps
 for_window [class="^.*"] border pixel 0
-gaps inner 15
-gaps outer 2
+smart_gaps on
+gaps inner 30
+gaps outer 15
 set $term --no-startup-id $TERMINAL
 set $mod Mod4
 set $stoprec --no-startup-id dmenurecord kill
