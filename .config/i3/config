@@ -1,10 +1,10 @@
 #
-#exec --no-startup-id compton --backend glx --paint-on-overlay --vsync opengl-swc --no-fading-openclose & 
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id libinput-gestures-setup start 
 exec --no-startup-id volnoti
 exec --no-startup-id compton --config $HOME/.config/compton
 exec --no-startup-id tilda
+exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/SboLF12.jpg
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # #---Basic Definitions---# #
@@ -44,21 +44,16 @@ for_window [class="Tilda"] floating enable
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 
-font pango:monospace 8
-
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVuSansMono Nerd Font 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec termite
-# Start a floating terminal
-#bindsym $mod+Shift+Return exec --no-startup-id termite -name "floating_terminal"
-bindsym $mod+Shift+Return exec termite
-for_window [class="Termite" instance="floating_terminal"] floating toggle
+
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # rofi
 bindsym $mod+d exec rofi -show run -lines 4 -width 40 -yoffset -270 -padding 0 -hide-scrollbar -eh 2 -bw 5 -font "System San Francisco Display 12" -run-list-command ". ~/Documents/scripts/alias.sh" -run-command "/bin/bash -i -c '{cmd}'" -rnow

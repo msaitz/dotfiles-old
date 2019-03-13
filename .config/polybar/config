@@ -143,17 +143,17 @@ wrapping-scroll = false
 
 ; ws-icon-[0-9]+ = label;icon
 ; NOTE: The label needs to match the name of the i3 workspace
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
-ws-icon-default = 
+#ws-icon-0 = 1;
+#ws-icon-1 = 2;
+#ws-icon-2 = 3;
+#ws-icon-3 = 4;
+#ws-icon-4 = 5;
+#ws-icon-5 = 6;
+#ws-icon-6 = 7;
+#ws-icon-7 = 8;
+#ws-icon-8 = 9;
+#ws-icon-9 = 10;
+#ws-icon-default = 
 
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
@@ -163,24 +163,24 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%: %icon%
+label-focused = %index%
 label-focused-background = ${module/bspwm.label-focused-background}
 label-focused-foreground = ${module/bspwm.label-focused-underline}
 label-focused-underline = ${module/bspwm.label-focused-underline}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%: %icon%
+label-unfocused = %index%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%: %icon%
+label-visible = %index%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%: %icon%
+label-urgent = %index%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
@@ -222,7 +222,9 @@ inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
+
 [module/cpu]
+#format = " <ramp-coreload> <label>"
 type = internal/cpu
 interval = 2
 format-prefix = "  "
@@ -262,22 +264,6 @@ label-disconnected-foreground = #66ffffff
 ;ramp-signal-3 = d
 ;ramp-signal-4 = e
 ;ramp-signal-foreground = ${colors.foreground-alt}
-
-#[module/eth]
-#type = internal/network
-#interface = docker0 
-#interval = 3.0
-#
-#format-connected-underline = #55aa55
-#format-connected-prefix = " "
-#format-connected-prefix-foreground = ${colors.foreground-alt}
-#label-connected = %local_ip%
-#
-#format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date

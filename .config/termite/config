@@ -27,7 +27,7 @@ highlight = #30343e
 [colors]
 
 #background = rgba(41,47,52,0.8)
-background = rgba(0,0,0,0.8)
+background = rgba(0,0,0,0.65)
 
 #background 		= #263238
 foreground 		= #eceff1
