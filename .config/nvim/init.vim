@@ -4,7 +4,7 @@ colo delek
 syntax on
 filetype indent plugin on
 nmap <C-n> :NERDTreeToggle<CR>
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
 let g:airline_theme='one'
@@ -20,12 +20,12 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdTree'
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'terryma/vim-multiple-cursors'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
 "let g:deoplete#enable_at_startup = 1
 call plug#end()

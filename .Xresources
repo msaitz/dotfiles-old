@@ -1,4 +1,5 @@
-Xft.dpi: 117
+#Xft.dpi: 117
+Xft.dpi: 110
 
 ! rofi bullshit 
 ! bg fg bgalt hlbg hlfg

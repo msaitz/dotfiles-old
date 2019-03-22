@@ -242,7 +242,7 @@ label = "%percentage_used%% "
 
 [module/network]
 type = internal/network
-interface = wlp1s0
+interface = wlp2s0
 interval = 1 
 
 format-connected = %{A1:connman-gtk:}<label-connected>%{A}

@@ -2,7 +2,12 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/yan/.oh-my-zsh"
+export ZSH="/home/yan/.oh-my-zsh"
+export EDITOR=nvim
+
+autoload -Uz compinit promptinit
+compinit
+promptinit
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -91,9 +96,18 @@ source /usr/share/fzf/completion.zsh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-alias vim="nvim"
-
+#
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM 
+alias suspend="systemctl suspend"
+alias hibernate="systemctl hibernate"
+alias vim="nvim"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshenv
+eval "$(rbenv init -)"
+source $HOME/.zshenv
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+

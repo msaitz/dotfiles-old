@@ -1,13 +1,21 @@
 #
+exec --no-startup-id xcalib -d :0 $HOME/.color/6000.icm 
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
+exec --no-startup-id redshift
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id libinput-gestures-setup start 
 exec --no-startup-id volnoti
 exec --no-startup-id compton --config $HOME/.config/compton
 exec --no-startup-id tilda
-exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/SboLF12.jpg
+exec --no-startup-id feh --bg-fill ~/Pictures/Wall.jpg
+exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id killall compton 
+exec_always --no-startup-id xrandr --output eDP1 --auto --output HDMI-2 --off
+exec_always --no-startup-id xrandr | grep 'HDMI-2 connected' && xrandr --output eDP-1 --primary --mode 1920x1080 --pos 0x1200 --output HDMI-2 --mode 1920x1200 --pos 0x0
+exec_always --no-startup-id compton --config $HOME/.config/compton
+exec_always --no-startup-id $HOME/.config/i3/scripts/wallpaper.sh
 
-# #---Basic Definitions---# #
 # Needed for i3-gaps
 for_window [class="^.*"] border pixel 0
 smart_gaps on
@@ -40,6 +48,7 @@ for_window [class="Gnome-system-monitor"] border pixel 1
 for_window [class="Thunar"] floating enable
 for_window [class="Thunar"] border pixel 1
 for_window [class="Tilda"] floating enable
+for_window [class="Ristretto"] floating enable floating_maximum_size 800 x 600
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -57,6 +66,7 @@ bindsym $mod+q kill
 
 # rofi
 bindsym $mod+d exec rofi -show run -lines 4 -width 40 -yoffset -270 -padding 0 -hide-scrollbar -eh 2 -bw 5 -font "System San Francisco Display 12" -run-list-command ". ~/Documents/scripts/alias.sh" -run-command "/bin/bash -i -c '{cmd}'" -rnow
+bindsym $mod+Tab exec "rofi -show combi run,window"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -116,8 +126,11 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 2 
-bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 2
+#bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 2 
+#bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 2
+bindsym XF86MonBrightnessDown	exec --no-startup-id light -U 1 
+bindsym XF86MonBrightnessUp	exec --no-startup-id light -A 1
+
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id "if command -v pamixer && [[ $(pamixer --get-volume) -le 98 ]]; then pactl set-sink-volume @DEFAULT_SINK@ +2% && volnoti-show $(pamixer --get-volume); fi"
 
@@ -163,6 +176,17 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
+
+# monitor config
+set $laptopScreen eDP-1
+set $monitor HDMI-2
+
+workspace 1 output $laptopScreen
+workspace 2 output $laptopScreen
+workspace 3 output $laptopScreen
+workspace 4 output $monitor
+workspace 5 output $monitor
+workspace 6 output $monitor
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
