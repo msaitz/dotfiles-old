@@ -14,8 +14,9 @@ background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
-primary = #ffb52a
+primary = #cc6600
 secondary = #e60053
+disconnected = #66ffffff
 success = #55aa55
 danger = #f5a70a
 alert = #ff5555
@@ -28,8 +29,9 @@ cpu = #f15025
 temperature = #f50a4d
 
 [bar/main_bar]
-;monitor = ${env:MONITOR:HDMI-1}
-;monitor = ${env:MONITOR:LVDS-1}
+#monitor = ${env:MONITOR:}
+#monitor = ${env:MONITOR:}
+enable-ipc =true
 width = 100%
 height = 30
 ;offset-x = 1%
@@ -53,21 +55,17 @@ module-margin-left = 1
 module-margin-right = 2
 
 # check fonts in your system with `fc-match`
-font-0 = DejavuSans:fixed:pixelsize=11.5;1
-#font-0 = fixed:pixelsize=12;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
-font-3 = Font Awesome 5 Free:style=Regular:pixelsize=12;1
-font-4 = Font Awesome 5 Free:style=Solid:pixelsize=12;1
-font-5 = Font Awesome 5 Brands:style=Regular;pixelsize=12;1
-font-6 = Noto Color Emoji:style=Regular;size=12
+font-0 = Font Awesome 5 Free:style=Solid:pixelsize=12;1
+font-1 = Font Awesome 5 Brands:style=Regular;pixelsize=12;1
+font-2 = siji:pixelsize=12;1
+font-3 = DejavuSans:fixed:pixelsize=11.5;1
 
-modules-left = i3
+modules-left = i3 xwindow
 modules-center = cpu memory temperature
-modules-right = volume backlight-acpi battery date network 
+modules-right = volume backlight-acpi bluetooth network battery date
 
 tray-position = right
-tray-padding = 2
+tray-padding = 1
 tray-underline-foreground = #0063ff
 ;tray-transparent = true
 ;tray-background = #0063ff
@@ -85,6 +83,17 @@ wm-restack = i3
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[module/bluetooth]
+type = custom/script
+exec = $HOME/.config/polybar/bluetooth.sh
+interval = 2
+click-left = exec blueberry
+click-right = exec $HOME/.config/polybar/toggle_bluetooth.sh
+click-middle = exec $HOME/.config/polybar/toggle_bluetooth.sh
+format-padding = 1
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
 
 [module/xwindow]
 type = internal/xwindow
@@ -121,7 +130,7 @@ type = internal/bspwm
 
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
+label-focused-underline= ${colors.danger}
 label-focused-padding = 2
 
 label-occupied = %index%
@@ -201,69 +210,40 @@ label-song-ellipsis = true
 type = internal/xbacklight
 
 format = <label>
-format-prefix-foreground = ${colors.backlight}
-format-underline = ${colors.backlight}
+format-prefix-foreground = ${colors.foreground}
 format-prefix = "  "
-label = "%percentage%% "
-
-;bar-width = 10
-;bar-indicator = 
-;bar-indicator-foreground = #ff
-;bar-indicator-font = 2
-;bar-fill = 
-;bar-fill-font = 1
-;bar-fill-foreground = #9f78e1
-;bar-empty = 
-;bar-empty-font = 1
-;bar-empty-foreground = ${colors.foreground-alt}
+label = "%percentage%%"
 
 [module/backlight-acpi]
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
-
 [module/cpu]
 #format = " <ramp-coreload> <label>"
 type = internal/cpu
 interval = 2
 format-prefix = "  "
-format-prefix-foreground = ${colors.cpu}
-format-underline = ${colors.cpu}
+format-prefix-foreground = ${colors.foreground}
 label = "%percentage:2%% "
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = "  "
-format-prefix-foreground = ${colors.memory}
-format-underline = ${colors.memory}
+format-prefix-foreground = ${colors.foreground}
 label = "%percentage_used%% "
 
 [module/network]
 type = internal/network
 interface = wlp2s0
+#interface = wlan0
 interval = 1 
 
-format-connected = %{A1:connman-gtk:}<label-connected>%{A}
-format-connected-underline = #9f78e1
-label-connected = %essid%
+format-connected = %{A1:connman-gtk:}%{A}
 
-; Default: (none)
-label-disconnected = %{A1:connman-gtk:}Not connected%{A}
-label-disconnected-foreground = #66ffffff
-#format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-;ramp-signal-0 = "I"
-;ramp-signal-1 = "II"
-;ramp-signal-2 = c
-;ramp-signal-3 = d
-;ramp-signal-4 = e
-;ramp-signal-foreground = ${colors.foreground-alt}
+label-disconnected = %{A1:connman-gtk:}%{A}
+label-disconnected-foreground = ${colors.disconnected}
 
 [module/date]
 type = internal/date
@@ -272,40 +252,36 @@ interval = 5
 date =
 date-alt = %Y-%m-%d
 
-time = %H:%M:%S
+time = %I:%M %p 
 time-alt = %H:%M:%S
 
-format-prefix-foreground = ${colors.time}
-format-underline = ${colors.time}
+format-prefix-foreground = ${colors.foreground}
 format-prefix = "  "
 label = "%date% %time% "
 
 [module/volume]
-type = internal/alsa
+type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
+format-volume =<label-volume><bar-volume>
 label-volume = " "
-label-volume-foreground = ${root.foreground}
+label-volume-foreground = ${colors.foreground}
 
 format-muted-prefix = " "
 format-muted-foreground = ${colors.danger}
 label-muted = sound muted
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = 
-bar-volume-indicator-font = 2
-bar-volume-fill = 
-bar-volume-fill-font = 2
-bar-volume-empty = 
-bar-volume-empty-font = 2
+#bar-volume-foreground-0 = #{colors.foreground}
+#bar-volume-foreground-1 = #55aa55
+#bar-volume-foreground-2 = #55aa55
+#bar-volume-foreground-3 = #55aa55
+#bar-volume-foreground-4 = #55aa55
+#bar-volume-foreground-5 = #f5a70a
+#bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-fill = ―
+bar-volume-empty = ―
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
@@ -315,15 +291,12 @@ adapter = AC
 full-at = 97
 
 format-charging =%{A1:xfce4-power-manager-settings:}<animation-charging> <label-charging>%{A} 
-format-charging-underline = ${colors.battery}
 
 format-discharging =%{A1:xfce4-power-manager-settings:}<ramp-capacity> <label-discharging>%{A} 
-format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = "  "
 format-full-postfix = " "
 format-full-prefix-foreground = ${colors.battery}
-format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = " "
 ramp-capacity-1 = " "
@@ -332,9 +305,9 @@ ramp-capacity-3 = " "
 ramp-capacity-4 = " "
 ramp-capacity-0-foreground = ${colors.alert}
 ramp-capacity-1-foreground = ${colors.danger}
-ramp-capacity-2-foreground = ${colors.success}
-ramp-capacity-3-foreground = ${colors.success}
-ramp-capacity-4-foreground = ${colors.success}
+ramp-capacity-2-foreground = ${colors.foreground}
+ramp-capacity-3-foreground = ${colors.foreground}
+ramp-capacity-4-foreground = ${colors.foreground}
 ramp-capacity-foreground = ${colors.foreground}
 
 animation-charging-0 = " "
@@ -342,8 +315,8 @@ animation-charging-1 = " "
 animation-charging-2 = " "
 animation-charging-3 = " "
 animation-charging-4 = " "
-animation-charging-0-foreground = ${colors.alert}
-animation-charging-1-foreground = ${colors.danger}
+animation-charging-0-foreground = ${colors.success}
+animation-charging-1-foreground = ${colors.success}
 animation-charging-2-foreground = ${colors.success}
 animation-charging-3-foreground = ${colors.success}
 animation-charging-4-foreground = ${colors.success}
@@ -356,10 +329,8 @@ thermal-zone = 0
 warn-temperature = 70
 
 format = " <ramp> <label> "
-format-underline = ${colors.temperature}
 format-warn = " <ramp> <label-warn> "
 format-warn-background = ${colors.foreground}
-format-warn-underline = ${self.format-underline}
 
 label = %temperature-c%
 label-warn = %temperature-c%
@@ -370,7 +341,9 @@ ramp-1 = " "
 ramp-2 = " "
 ramp-3 = " "
 ramp-4 = " "
-ramp-foreground = ${colors.temperature}
+ramp-3-foreground = ${colors.danger}
+ramp-4-foreground = ${colors.temperature}
+ramp-foreground = ${colors.foreground}
 
 [module/powermenu]
 type = custom/menu
