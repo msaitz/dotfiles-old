@@ -48,6 +48,7 @@ for_window [class="Gnome-system-monitor"] border pixel 1
 for_window [class="Thunar"] floating enable
 for_window [class="Thunar"] border pixel 1
 for_window [class="Arandr"] floating enable
+for_window [class="vlc"] floating enable
 for_window [class="Blueberry"] floating enable
 for_window [class="Ristretto"] floating enable floating_maximum_size 800 x 600
 
@@ -199,16 +200,16 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 set $laptopScreen eDP-1
 set $monitor HDMI-2
 
-workspace 1 output $laptopScreen
-workspace 2 output $laptopScreen
-workspace 3 output $laptopScreen
+workspace 1 output $monitor
+workspace 2 output $monitor
+workspace 3 output $monitor
 workspace 4 output $monitor
 workspace 5 output $monitor
-workspace 6 output $monitor
-workspace 7 output $monitor
-workspace 8 output $monitor
-workspace 9 output $monitor
-workspace 0 output $monitor
+workspace 6 output $laptopScreen
+workspace 7 output $laptopScreen
+workspace 8 output $laptopScreen
+workspace 9 output $laptopScreen
+workspace 0 output $laptopScreen
 
 # reload the configuration file
 bindsym $mod+c reload
