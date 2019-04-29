@@ -103,6 +103,7 @@ source /usr/share/fzf/completion.zsh
 alias suspend="systemctl suspend"
 alias hibernate="systemctl hibernate"
 alias vim="nvim"
+alias monitor="ddcutil setvcp 10"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 

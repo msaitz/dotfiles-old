@@ -3,7 +3,8 @@
 colo delek
 syntax on
 filetype indent plugin on
-nmap <C-n> :NERDTreeToggle<CR>
+"map <C-x>:NERDTreeToggle<CR>
+map <C-x> :NERDTreeToggle<CR>
 "let g:deoplete#enable_at_startup = 1
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1

@@ -1,13 +1,13 @@
 #
 exec --no-startup-id xcalib -d :0 $HOME/.color/6000.icm 
-exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
-exec --no-startup-id redshift
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id libinput-gestures-setup start 
 exec --no-startup-id compton --config $HOME/.config/compton
 exec --no-startup-id tilda
 exec --no-startup-id feh --bg-fill ~/Pictures/Wall.jpg
 exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
+exec --no-startup-id redshift
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id killall compton 
 exec_always --no-startup-id xrandr --output eDP1 --auto --output HDMI-2 --off
@@ -50,6 +50,7 @@ for_window [class="Thunar"] border pixel 1
 for_window [class="Arandr"] floating enable
 for_window [class="vlc"] floating enable
 for_window [class="Blueberry"] floating enable
+for_window [title="Volume Control"] floating enable
 for_window [class="Ristretto"] floating enable floating_maximum_size 800 x 600
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -70,7 +71,7 @@ bindsym $mod+Return exec termite
 bindsym $mod+q kill
 
 # rofi
-bindsym $mod+d exec rofi -show run -lines 4 -width 40 -yoffset -270 -padding 0 -hide-scrollbar -eh 2 -bw 5 -font "System San Francisco Display 12" -run-list-command ". ~/Documents/scripts/alias.sh" -run-command "/bin/bash -i -c '{cmd}'" -rnow
+bindsym $mod+d exec rofi -show run -lines 7 -width 40 -padding 0 -hide-scrollbar -eh 2 -bw 1 -font "System San Francisco Display 12" -run-list-command ". ~/Documents/scripts/alias.sh" -run-command "/bin/bash -i -c '{cmd}'" -rnow
 bindsym $mod+Tab exec "rofi -show combi run,window"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -133,7 +134,7 @@ bindsym $mod+Shift+c exec killall compton && compton --config .config/compton -b
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+a focus parent--auto-gen-config
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -159,6 +160,8 @@ bindsym XF86AudioMute exec --no-startup-id "if command -v pactl; then pactl set-
 
 bindsym XF86AudioMicMute exec --no-startup-id "if command -v pactl; then pactl set-source-mute @DEFAULT_SOURCE@ toggle; fi" 
 
+# Add a new workspace
+bindsym $mod+n exec --no-startup-id ~/.config/i3/add_workspace.sh
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -200,16 +203,16 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 set $laptopScreen eDP-1
 set $monitor HDMI-2
 
-workspace 1 output $monitor
-workspace 2 output $monitor
-workspace 3 output $monitor
-workspace 4 output $monitor
+workspace 1 output $laptopScreen
+workspace 2 output $laptopScreen
+workspace 3 output $laptopScreen
+workspace 4 output $laptopScreen
 workspace 5 output $monitor
-workspace 6 output $laptopScreen
-workspace 7 output $laptopScreen
-workspace 8 output $laptopScreen
-workspace 9 output $laptopScreen
-workspace 0 output $laptopScreen
+workspace 6 output $monitor
+workspace 7 output $monitor
+workspace 8 output $monitor
+workspace 9 output $monitor
+workspace 0 output $monitor
 
 # reload the configuration file
 bindsym $mod+c reload

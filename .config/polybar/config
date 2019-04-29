@@ -62,11 +62,10 @@ modules-left = i3 xwindow
 modules-center = cpu memory temperature
 modules-right = volume backlight-acpi bluetooth network battery date
 
-tray-position = right
+tray-position = center
 tray-padding = 1
 tray-underline-foreground = #0063ff
-;tray-transparent = true
-;tray-background = #0063ff
+tray-offset-x = 420
 
 ;wm-restack = bspwm
 wm-restack = i3
@@ -233,10 +232,11 @@ type = internal/date
 interval = 5
 
 date =
-date-alt = %Y-%m-%d
+#date-alt = %Y-%m-%d
+date-alt = %A, %d %B %Y
 
 time = %I:%M%P 
-time-alt = %H:%M:%S
+time-alt = 
 
 format-prefix-foreground = ${colors.foreground}
 format-prefix = "  "
