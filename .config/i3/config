@@ -1,5 +1,6 @@
 #
 exec --no-startup-id xcalib -d :0 $HOME/.color/6000.icm 
+exec --no-startup-id gnome-keyring-daemon
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id libinput-gestures-setup start 
 exec --no-startup-id compton --config $HOME/.config/compton
@@ -9,26 +10,19 @@ exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id killall compton 
-exec_always --no-startup-id xrandr --output eDP1 --auto --output HDMI-2 --off
-exec_always --no-startup-id xrandr | grep 'HDMI-2 connected' && xrandr --output eDP-1 --primary --mode 1920x1080 --pos 0x1200 --output HDMI-2 --mode 1920x1200 --pos 0x0
-exec_always --no-startup-id compton --config $HOME/.config/compton
 exec_always --no-startup-id $HOME/.config/i3/scripts/wallpaper.sh
 
 # Needed for i3-gaps
 for_window [class="^.*"] border pixel 0
 smart_gaps on
 gaps inner 30
-gaps outer 15
-#gaps top 50
+gaps outer 1
+
 set $term --no-startup-id $TERMINAL
 set $mod Mod4
-set $stoprec --no-startup-id dmenurecord kill
 set $shutdown sudo -A shutdown -h now
 set $reboot sudo -A reboot
-set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
-
 
 # General dropdown window traits. The order can matter.
 for_window [instance="dropdown_*"] floating enable
@@ -42,6 +36,7 @@ for_window [instance="dropdown_dropdownc"] border pixel 2
 for_window [instance="dropdown_*"] move position center
 
 # Force floating programs
+for_window [class="soulseekqt"] floating enable
 for_window [class="Connman-gtk"] floating enable
 for_window [class="Gnome-system-monitor"] floating enable
 for_window [class="Gnome-system-monitor"] border pixel 1
@@ -136,9 +131,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent--auto-gen-config
 
-# focus the child container
-#bindsym $mod+d focus child
-
 #bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 2 
 #bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 2
 bindsym XF86MonBrightnessDown	exec --no-startup-id light -U 1 
@@ -151,7 +143,6 @@ bindsym XF86MonBrightnessUp	exec --no-startup-id light -A 1
 
 #bindsym XF86AudioMute exec --no-startup-id "if command -v pactl; then pactl set-sink-mute @DEFAULT_SINK@ toggle && if pamixer --get-mute | grep -Fq 'true'; then volnoti-show -m; else volnoti-show $(pamixer --get-volume); fi; fi"
 
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id "if command -v pamixer && [[ $(pamixer --get-volume) -le 98 ]]; then pactl set-sink-volume @DEFAULT_SINK@ +2%; fi"
 
 bindsym XF86AudioLowerVolume exec --no-startup-id "if command -v pamixer && [[ $(pamixer --get-volume) -ge 2 ]]; then pactl set-sink-volume @DEFAULT_SINK@ -2%; fi"
@@ -159,6 +150,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "if command -v pamixer && [[ $
 bindsym XF86AudioMute exec --no-startup-id "if command -v pactl; then pactl set-sink-mute @DEFAULT_SINK@ toggle && if pamixer --get-mute | grep -Fq 'true'; then volnoti-show -m; else volnoti-show $(pamixer --get-volume); fi; fi"
 
 bindsym XF86AudioMicMute exec --no-startup-id "if command -v pactl; then pactl set-source-mute @DEFAULT_SOURCE@ toggle; fi" 
+
+# Scroll through workspaces
+bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+j workspace prev
+bindsym $mod+Ctrl+semicolon workspace next
 
 # Add a new workspace
 bindsym $mod+n exec --no-startup-id ~/.config/i3/add_workspace.sh
@@ -200,9 +197,11 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # monitor config
-set $laptopScreen eDP-1
-set $monitor HDMI-2
+#set $laptopScreen eDP-1
+#set $monitor HDMI-2
 
+set $laptopScreen DP-1-1
+set $monitor DP-1-2
 workspace 1 output $laptopScreen
 workspace 2 output $laptopScreen
 workspace 3 output $laptopScreen
@@ -212,12 +211,14 @@ workspace 6 output $monitor
 workspace 7 output $monitor
 workspace 8 output $monitor
 workspace 9 output $monitor
-workspace 0 output $monitor
+workspace 10 output $monitor
 
 # reload the configuration file
 bindsym $mod+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Ctrl+r restart 
+
+bindsym $mod+Shift+r exec --no-startup-id ~/.config/i3/scripts/monitors.sh
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
