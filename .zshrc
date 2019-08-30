@@ -87,24 +87,30 @@ source /usr/share/fzf/completion.zsh
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias suspend="systemctl suspend"
 alias hibernate="systemctl hibernate"
 alias vim="nvim"
 alias monitor="ddcutil setvcp 10"
 alias node="NODE_NO_READLINE=1 rlwrap node"
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"
+
+# work aliases
+alias hbi-billing="aws-vault exec hbi-billing --"
+alias hbi-services="aws-vault exec hbi-services --"
+alias hbi-sandbox="aws-vault exec hbi-sandbox --"
+alias hbi-dev="aws-vault exec hbi-dev --"
+alias hbi-prod="aws-vault exec hbi-prod --"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
